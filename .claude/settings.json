@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make *)",
+      "Bash(uv *)",
+      "Bash(python *)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git add*)",
+      "Bash(git commit*)"
+    ],
+    "deny": [
+      "Bash(git checkout -b *)",
+      "Bash(git worktree *)",
+      "Bash(git branch *)"
+    ]
+  }
+}
