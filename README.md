@@ -6,6 +6,8 @@ A project template optimized for AI-assisted development with Claude Code, Curso
 
 A ready-to-use project structure that makes AI coding agents **10x more productive**. Instead of the AI guessing where files go, what tests exist, or what the project does — everything is documented in a format agents understand natively.
 
+> **Full documentation**: See [`docs/guide.md`](docs/guide.md) for a deep dive into how everything works and why each decision was made.
+
 ## What's included
 
 ```
@@ -37,7 +39,7 @@ A ready-to-use project structure that makes AI coding agents **10x more producti
 ### 1. Clone and customize
 
 ```bash
-git clone https://github.com/devkauania/dev-template.git my-project
+git clone https://github.com/devkauania/ai-dev-template.git my-project
 cd my-project
 rm -rf .git && git init
 ```
