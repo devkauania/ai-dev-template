@@ -4,30 +4,30 @@
 
 ## Current Phase
 
-**Session X** — Brief description of what's being built now.
+**Session S0** — Project setup and initial structure.
 
 ## Session Plan
 
 <!-- Organize your work in numbered sessions. Each session = one feature. -->
+<!-- The agent will fill this in during the onboarding conversation. -->
 
 | Session | Feature | Status | Depends On |
 |---------|---------|--------|------------|
-| S0 | Project setup + DX tooling | Done | — |
-| S1 | Feature A | In Progress | — |
-| S2 | Feature B | Pending | — |
-| S3 | Feature C | Pending | S1 |
+| S0 | Project setup + tooling | In Progress | — |
 
 ## Completed
 
-- S0: Initial project setup, CI, linting, test framework
+<!-- Track completed sessions here -->
 
 ## Test Baseline
 
 <!-- Update this after each session so the AI knows what to protect -->
+<!-- The validate-before-stop hook will remind you to check this -->
 
 | Area | Tests |
 |------|-------|
-| api | 0 |
-| services | 0 |
-| domain | 0 |
-| **Total** | **0** |
+| total | 0 |
+
+## Next Steps
+
+<!-- What to work on next — the agent updates this at end of each session -->

@@ -3,17 +3,39 @@
     "allow": [
       "Bash(make *)",
       "Bash(uv *)",
-      "Bash(python *)",
+      "Bash(python*)",
+      "Bash(python3*)",
+      "Bash(node*)",
+      "Bash(npm*)",
+      "Bash(npx*)",
+      "Bash(curl*)",
       "Bash(git status*)",
       "Bash(git log*)",
       "Bash(git diff*)",
       "Bash(git add*)",
-      "Bash(git commit*)"
+      "Bash(git commit*)",
+      "Bash(git stash*)",
+      "Bash(docker*)",
+      "Bash(echo*)",
+      "Bash(wc*)",
+      "Bash(du*)",
+      "Bash(ls *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "TodoWrite",
+      "Agent",
+      "WebSearch"
     ],
     "deny": [
-      "Bash(git checkout -b *)",
-      "Bash(git worktree *)",
-      "Bash(git branch *)"
+      "Bash(git checkout -b*)",
+      "Bash(git worktree*)",
+      "Bash(git branch *)",
+      "Bash(git switch -c*)"
     ]
   }
 }

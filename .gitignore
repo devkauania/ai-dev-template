@@ -27,7 +27,7 @@ coverage.xml
 *.swp
 *.swo
 
-# Environment
+# Environment (NEVER commit secrets)
 .env
 .env.local
 .env.*.local
@@ -38,3 +38,11 @@ Thumbs.db
 
 # Docker
 docker-compose.override.yml
+
+# Claude Code (local runtime data)
+.claude/worktrees/
+.claude/settings.local.json
+
+# Node.js (if applicable)
+node_modules/
+.next/

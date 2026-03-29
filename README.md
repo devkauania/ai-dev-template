@@ -4,23 +4,30 @@ A project template optimized for AI-assisted development with Claude Code, Curso
 
 ## What is this?
 
-A ready-to-use project structure that makes AI coding agents **10x more productive**. Instead of the AI guessing where files go, what tests exist, or what the project does — everything is documented in a format agents understand natively.
+A ready-to-use project structure that makes AI coding agents dramatically more productive. Instead of the AI guessing where files go, what tests exist, or what the project does — everything is documented in a format agents understand natively.
 
-> **Full documentation**: See [`docs/guide.md`](docs/guide.md) for a deep dive into how everything works and why each decision was made.
+> **Full documentation**: See [`docs/guide.md`](docs/guide.md) for a deep dive into how everything works.
 
 ## What's included
 
 ```
 .
 ├── CLAUDE.md                 # AI agent instructions (reads this first)
+├── ONBOARDING.md             # Agent personalization guide (delete after setup)
 ├── .context/
 │   └── STATE.md              # Session tracking, test baselines, progress
 ├── .claude/
 │   ├── launch.json           # Preview server config
-│   └── settings.json         # Permission rules (no branches, no worktrees)
+│   ├── settings.json         # Permission rules (no branches, no worktrees)
+│   ├── hookify.validate-before-stop.local.md
+│   ├── hookify.credential-protection.local.md
+│   ├── hookify.dangerous-commands.local.md
+│   ├── hookify.env-safety.local.md
+│   └── hookify.branch-protection.local.md
 ├── docs/
-│   ├── session-protocol.md   # How sessions work
-│   └── architecture.md       # System design reference
+│   ├── session-protocol.md   # How sessions work + hook reference
+│   ├── architecture.md       # System design reference
+│   └── guide.md              # Deep dive (Portuguese)
 ├── src/                      # Source code (clean architecture)
 │   ├── api/routes/           # HTTP layer
 │   ├── services/             # Business logic
@@ -34,60 +41,52 @@ A ready-to-use project structure that makes AI coding agents **10x more producti
 └── .gitignore
 ```
 
-## How to use
+## Quick Start
 
-### 1. Clone and customize
+### Option A: Let the AI personalize it (recommended)
 
 ```bash
-git clone https://github.com/devkauania/ai-dev-template.git my-project
+git clone https://github.com/devkauania/dev-template.git my-project
 cd my-project
 rm -rf .git && git init
 ```
 
-### 2. Fill in the placeholders
+Then open Claude Code and say: **"Read ONBOARDING.md and help me set up this project."**
 
-Replace `{{PROJECT_NAME}}` in these files:
-- `CLAUDE.md` — your project name and description
-- `.context/STATE.md` — your session plan
-- `.env.example` — your env vars
-- `pyproject.toml` — package name
+The agent will ask what you're building, customize all files, and run S0 (setup session).
 
-### 3. Update the "Where to Modify" table
+### Option B: Manual setup
 
-This is the **most important part**. Open `CLAUDE.md` and update the table to match YOUR project structure. This table is what tells the AI agent exactly where to make changes.
+1. Replace `{{PROJECT_NAME}}` in `CLAUDE.md`, `STATE.md`, `.env.example`, `pyproject.toml`
+2. Update the "Where to Modify" table in `CLAUDE.md` for your structure
+3. Plan sessions in `.context/STATE.md`
+4. Delete `ONBOARDING.md`
+5. `make install && make validate`
 
-### 4. Plan your sessions
+## Protection Hooks
 
-Open `.context/STATE.md` and list your features as numbered sessions:
+5 hookify rules are included out of the box:
 
-```markdown
-| Session | Feature | Status | Depends On |
-|---------|---------|--------|------------|
-| S0 | Project setup | Done | — |
-| S1 | User authentication | In Progress | — |
-| S2 | Product catalog | Pending | S1 |
-| S3 | Shopping cart | Pending | S2 |
-```
+| Hook | What it does | Action |
+|------|-------------|--------|
+| **validate-before-stop** | Reminds the agent to run `make validate` before ending | warn |
+| **credential-protection** | Detects hardcoded secrets in non-.env files | warn |
+| **dangerous-commands** | Blocks `rm -rf /`, force push, `DROP TABLE` | **block** |
+| **env-safety** | Reminds .env rules (no inline comments) when editing | warn |
+| **branch-protection** | Explains master-only policy when agent tries to branch | warn |
 
-### 5. Start developing
-
-```bash
-make install    # Install deps
-make test       # Run tests
-make validate   # Full validation
-```
+**Prerequisite**: Install the [hookify plugin](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/hookify) in Claude Code.
 
 ## Why this works
 
-AI agents (Claude Code, Cursor, etc.) are powerful but they waste time when they don't know:
-- **Where** files are → `CLAUDE.md` "Where to Modify" table solves this
-- **What** to do next → `.context/STATE.md` session plan solves this
-- **How** to validate → `make validate` + session protocol solves this
-- **What** rules to follow → `CLAUDE.md` "Critical Rules" solves this
+AI agents waste time when they don't know:
+- **Where** files are → `CLAUDE.md` "Where to Modify" table
+- **What** to do next → `.context/STATE.md` session plan
+- **How** to validate → `make validate` + session protocol
+- **What** rules to follow → `CLAUDE.md` "Critical Rules"
+- **What** to avoid → hookify rules catch mistakes automatically
 
-The result: tasks that take a solo dev 4 hours get done in ~15 minutes.
-
-## Session workflow
+## Session Workflow
 
 ```
 1. AI reads CLAUDE.md     → knows the rules and file locations
@@ -102,15 +101,15 @@ The result: tasks that take a solo dev 4 hours get done in ~15 minutes.
 
 This template defaults to Python + uv, but the **structure** works for any stack:
 
-| Stack | Adjust |
-|-------|--------|
-| **Node.js** | Change `Makefile` commands to `npm`/`pnpm`, `pyproject.toml` → `package.json` |
-| **Go** | Change `src/` to standard Go layout, `Makefile` to `go test ./...` |
-| **Rust** | Change to `cargo` commands, `src/` to `src/lib.rs` structure |
-| **Monorepo** | Add `packages/` dir, run tests per-package (like Blink does) |
+| Stack | What to change |
+|-------|---------------|
+| **Node.js** | `Makefile` commands → npm/pnpm, `pyproject.toml` → `package.json` |
+| **Go** | `src/` → standard Go layout, `Makefile` → `go test ./...` |
+| **Rust** | Cargo commands, `src/` → `src/lib.rs` structure |
+| **Monorepo** | Add `packages/` dir, run tests per-package |
 
-The key files (`CLAUDE.md`, `STATE.md`, `session-protocol.md`) work with **any language**.
+The key files (`CLAUDE.md`, `STATE.md`, hookify rules) work with **any language**.
 
 ## License
 
-MIT — use it however you want.
+MIT

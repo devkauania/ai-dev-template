@@ -2,7 +2,7 @@
 # Usage: make <target>
 # Run `make help` to see all available targets.
 
-.PHONY: help install test lint validate clean
+.PHONY: help install test lint format validate clean
 
 # ============================================================
 # Help
